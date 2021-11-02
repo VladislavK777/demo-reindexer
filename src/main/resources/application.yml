@@ -1,0 +1,3 @@
+logging:
+  level:
+    ru.rt.restream.reindexer: info

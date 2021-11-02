@@ -6,7 +6,7 @@ public class TaskView {
     @Reindex(name = "id", isPrimaryKey = true)
     private Integer id;
 
-    @Reindex(name = "name")
+    @Reindex(name = "name", isSparse = true)
     private String name;
 
     public TaskView(Integer id, String name) {
