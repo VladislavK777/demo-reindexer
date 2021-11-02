@@ -25,7 +25,9 @@ public class Service {
         int local = 0;
         try {
             for (int i = restart; i < 30000; i++) {
+                Thread.sleep(1000);
                 db.upsert("test_view", new TaskView(i, "Task_" + i));
+                System.out.println(i);
                 local = i;
             }
         } catch (Exception e) {
