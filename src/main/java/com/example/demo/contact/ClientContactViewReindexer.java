@@ -6,9 +6,10 @@ import java.util.List;
 
 import static ru.rt.restream.reindexer.IndexType.HASH;
 
+@Reindex(name = "contactId+contactTypeId", isPrimaryKey = true, subIndexes = {"contactId", "contactTypeId"})
 public class ClientContactViewReindexer {
 
-    @Reindex(name = "contactId", isPrimaryKey = true, type = HASH)
+    @Reindex(name = "contactId", type = HASH)
     private Long contactId;
 
     @Reindex(name = "contactTypeId", type = HASH)
