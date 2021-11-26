@@ -1,14 +1,12 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.rt.restream.reindexer.Namespace;
-import ru.rt.restream.reindexer.Reindexer;
 
 @Component
-@EnableScheduling
+//@EnableScheduling
 public class Service {
     private final Namespace<TaskView> namespace;
     int restart = 0;
