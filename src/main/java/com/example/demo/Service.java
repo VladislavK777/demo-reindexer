@@ -1,12 +1,16 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 import ru.rt.restream.reindexer.Namespace;
+import ru.rt.restream.reindexer.Query;
+
+import javax.annotation.PostConstruct;
+import java.time.ZonedDateTime;
 
 @Component
-//@EnableScheduling
+@EnableScheduling
 public class Service {
     private final Namespace<TaskView> namespace;
     int restart = 0;
@@ -16,13 +20,14 @@ public class Service {
         this.namespace = namespace;
     }
 
-    @Scheduled(fixedDelayString = "60000")
+    // @Scheduled(fixedDelayString = "10000")
     public void start() {
+        Long create = ZonedDateTime.now().toInstant().getEpochSecond();
         int local = 0;
         try {
-            for (int i = restart; i < 30000; i++) {
-                Thread.sleep(1000);
-                namespace.upsert(new TaskView(i, "Task_" + i));
+            for (int i = restart; i < 10; i++) {
+                Thread.sleep(5000);
+                namespace.upsert(new TaskView(i, "Task_" + i, ZonedDateTime.now().toInstant().getEpochSecond(), create));
                 System.out.println(i);
                 local = i + 1;
             }
@@ -30,5 +35,11 @@ public class Service {
             System.out.println("exception i = " + local);
             restart = local;
         }
+    }
+
+    @PostConstruct
+    public void getTask() {
+        System.out.println(namespace.execSql("select * from test_view where create > date").next());
+
     }
 }

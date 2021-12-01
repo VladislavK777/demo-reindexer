@@ -75,7 +75,6 @@ public class ContactService {
             "  \"contactTypeId\": 1\n" +
             "}";
 
-    @PostConstruct
     public void updateContact() throws JsonProcessingException {
         Namespace<ClientContactViewReindexer> namespace = reindexer.openNamespace("entity_contact", defaultOptions(), ClientContactViewReindexer.class);
         namespace.upsert(objectMapper.readValue(contact, ClientContactViewReindexer.class));
