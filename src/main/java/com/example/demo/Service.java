@@ -3,6 +3,7 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
+import ru.rt.restream.reindexer.CloseableIterator;
 import ru.rt.restream.reindexer.Namespace;
 import ru.rt.restream.reindexer.Query;
 
@@ -39,6 +40,9 @@ public class Service {
 
     @PostConstruct
     public void getTask() {
+        System.out.println("--------where--------");
+        System.out.println(namespace.query().whereBetweenFields("create", Query.Condition.GT, "date").execute().next());
+        System.out.println("--------execSql--------");
         System.out.println(namespace.execSql("select * from test_view where create > date").next());
 
     }
