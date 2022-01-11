@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
-import ru.rt.restream.reindexer.CloseableIterator;
 import ru.rt.restream.reindexer.Namespace;
 import ru.rt.restream.reindexer.Query;
 
@@ -14,11 +12,12 @@ import java.time.ZonedDateTime;
 @EnableScheduling
 public class Service {
     private final Namespace<TaskView> namespace;
+    private final TaskViewRepository taskViewRepository;
     int restart = 0;
 
-    @Autowired
-    public Service(Namespace<TaskView> namespace) {
+    public Service(Namespace<TaskView> namespace, TaskViewRepository taskViewRepository) {
         this.namespace = namespace;
+        this.taskViewRepository = taskViewRepository;
     }
 
     // @Scheduled(fixedDelayString = "10000")
@@ -38,12 +37,17 @@ public class Service {
         }
     }
 
-    @PostConstruct
     public void getTask() {
         System.out.println("--------where--------");
         System.out.println(namespace.query().whereBetweenFields("create", Query.Condition.GT, "date").execute().next());
         System.out.println("--------execSql--------");
         System.out.println(namespace.execSql("select * from test_view where create > date").next());
 
+    }
+
+    @PostConstruct
+    public void getTaskFromStringData() {
+        System.out.println("--------where--------");
+        System.out.println(taskViewRepository.findAllByName("Task_2"));
     }
 }

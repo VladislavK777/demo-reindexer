@@ -1,7 +1,9 @@
 package com.example.demo;
 
+import org.springframework.data.reindexer.core.mapping.Namespace;
 import ru.rt.restream.reindexer.annotations.Reindex;
 
+@Namespace(name = "test_view")
 public class TaskView {
     @Reindex(name = "id", isPrimaryKey = true)
     private Integer id;
