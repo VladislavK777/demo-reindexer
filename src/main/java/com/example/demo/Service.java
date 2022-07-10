@@ -48,6 +48,6 @@ public class Service {
     @PostConstruct
     public void getTaskFromStringData() {
         System.out.println("--------where--------");
-        System.out.println(taskViewRepository.findAllByName("Task_2"));
+        System.out.println(taskViewRepository.findAllByName("Task_2").next());
     }
 }
